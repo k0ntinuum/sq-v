@@ -6,6 +6,7 @@ struct System {
 	hood i64
 	symbols i64
 	depth i64
+	perm_key []i64
 	mut:
 	key []i64
 	state []i64
@@ -19,11 +20,13 @@ fn square_system( symbols i64, hood i64) System {
 		hood : hood
 		symbols: symbols
 		depth: math.powi(i64(symbols), hood)
+		perm_key : random_i64_vector(math.powi(i64(symbols), hood), u64(symbols))
 		key : random_i64_vector(math.powi(i64(symbols), hood), u64(symbols))
 		state : random_i64_vector(math.powi(i64(symbols), hood), u64(symbols))
 		head : 0
 	}
-	s.state  = s.key
+	s.state  = s.perm_key
+	s.key = s.perm_key
 	return s
 }
 
@@ -33,21 +36,17 @@ fn (system System) print_state() {
 fn (system System) print_key() {
 	print_glyph_vector(system.key)
 }
-
-// fn (mut system System) roll() {
-// 	mut v := []Glyph{}
-// 	for i in 0..system.state.len {
-// 		v << system.key[system.cell_code(i)]
-// 	}
-// 	system.state = v
-// }
+fn (mut s System) reset() {
+	s.state = s.perm_key.clone()
+	s.key = s.perm_key.clone()
+}
 
 fn (mut system System) roll() {
 	mut v := []Glyph{}
 	for i in 0..system.state.len {
 		v << system.key[system.cell_code(i)]
 	}
-	system.state = v
+	system.state = v.clone()
 }
 
 
