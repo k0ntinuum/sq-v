@@ -10,6 +10,16 @@ pub fn print_glyph_vector(v []Glyph) {
 	for i in 0..v.len { print_glyph(v[i]) }
 	print("\n")
 }
+pub fn print_block_vector(v []Glyph) {
+	for i in 0..v.len {
+		match v[i] {
+			0 { print("\u2588")}
+			else { print(" ") }
+		}
+		
+	 }
+	print("\n")
+}
 
 pub fn print_glyph_vectors(u []Glyph, v []Glyph, k int) {
 	for i in 0..u.len { 

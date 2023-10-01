@@ -48,6 +48,13 @@ fn (mut system System) roll() {
 	}
 	system.state = v.clone()
 }
+fn (mut system System) key_roll() {
+	mut v := []Glyph{}
+	for i in 0..system.key.len {
+		v << system.key[system.cell_code(i)]
+	}
+	system.key = v.clone()
+}
 
 
 

@@ -1,7 +1,8 @@
 fn test_encode() {
-	text_length := 128
+	text_length := 32
 	symbols := 2
-	hood := 5
+	hood := 7
+	rounds := 16
 
 		for i in 0..1 {
 			mut s := square_system(symbols,hood)
@@ -13,16 +14,18 @@ fn test_encode() {
 			
 			// c := s.flicker_encode(p)
 			// d := s.flicker_decode(c)
-			c := s.encrypt(p)
-			d := s.decrypt(c)
+			c := s.encrypt(p,rounds)
+			d := s.decrypt(c,rounds)
+			println("")
+			print_glyph_vector(s.key)
 			println("")
 			print_glyph_vector(p)
 			print_glyph_vector(c)
 			print_glyph_vector(d)
-			print("${same(p,c)}/${text_length}")
+			print("${same(p,c):-4 }/${text_length:4}")
 
 			if same(p,c) == text_length {
-				println("FAILURE at ${i}") 
+				println("\nFAILURE at ${i}") 
 				exit(0)
 			}
 			println("")
